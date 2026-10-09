@@ -7,7 +7,7 @@ const PROFILE = {
   role: "Fullstack Developer",
   photo: "./hero.jpeg", // e.g. "/me.jpg" — leave empty to show initials
   cv: "./Resume.pdf",
-  email: "you@example.com",
+  email: "vilsonjs07@gmail.com",
   linkedin: "https://www.linkedin.com/in/amalawilsonjs",
   github: "https://github.com/vilsonjs07-ux",
   about: [
@@ -17,9 +17,24 @@ const PROFILE = {
 };
 
 const PROJECTS = [
-  { title: "Shop Front", text: "A responsive e-commerce storefront with cart, filters and checkout flow.", tags: ["React", "Redux", "CSS"], link: "#" },
-  { title: "Task Board", text: "Drag-and-drop kanban board that saves progress between visits.", tags: ["React", "Hooks", "Vite"], link: "#" },
-  { title: "Weather Now", text: "Live forecast app with city search and a seven-day outlook.", tags: ["JavaScript", "REST API"], link: "#" },
+  {
+    title: "CashFlow Pro",
+    text: "Offline-first personal and business finance manager featuring income and expense tracking, budget thresholds, savings goals, and interactive Chart.js analytics.",
+    tags: ["JavaScript", "Chart.js", "LocalStorage", "CSS3"],
+    link: "https://cash-flow-n4jm.vercel.app/",
+  },
+  {
+    title: "MediCare Hospital",
+    text: "Comprehensive healthcare and hospital management portal with specialist doctor profiles, medical department services, and online appointment booking.",
+    tags: ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
+    link: "https://hospital-management-coral.vercel.app/",
+  },
+  {
+    title: "Rural Bus Tracker",
+    text: "Real-time smart passenger information and transit tracking system for rural routes featuring crowd-sourced GPS, confidence scoring, and low-bandwidth SMS mode.",
+    tags: ["Python", "Flask", "Leaflet.js", "MySQL"],
+    link: "https://rural-bus-tracker-iota.vercel.app/",
+  },
 ];
 
 const SKILLS = ["HTML", "CSS", "JavaScript", "React", "Git", "REST APIs", "Responsive design","java","Spring Boot"];
@@ -180,7 +195,7 @@ export default function Portfolio() {
                   <h3>{p.title}</h3>
                   <p>{p.text}</p>
                   <div className="tags">{p.tags.map((t) => <span className="tag" key={t}>{t}</span>)}</div>
-                  <a href={p.link}>View project</a>
+                  <a href={p.link} target="_blank" rel="noreferrer">View project</a>
                 </article>
               ))}
             </div>
