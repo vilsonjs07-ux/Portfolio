@@ -5,7 +5,7 @@ const PROFILE = {
   brand: "Wilson",
   name: "Amala Wilson",
   role: "Fullstack Developer",
-  photo: "./hero.jpeg", // e.g. "/me.jpg" — leave empty to show initials
+  photo: "./hero.jpg", // e.g. "/me.jpg" — leave empty to show initials
   cv: "./Resume.pdf",
   email: "vilsonjs07@gmail.com",
   linkedin: "https://www.linkedin.com/in/amalawilsonjs",
@@ -19,25 +19,28 @@ const PROFILE = {
 const PROJECTS = [
   {
     title: "CashFlow Pro",
+    image: "./projects/cashflow.jpg",
     text: "Offline-first personal and business finance manager featuring income and expense tracking, budget thresholds, savings goals, and interactive Chart.js analytics.",
     tags: ["JavaScript", "Chart.js", "LocalStorage", "CSS3"],
     link: "https://cash-flow-n4jm.vercel.app/",
   },
   {
     title: "MediCare Hospital",
+    image: "./projects/medicare.jpg",
     text: "Comprehensive healthcare and hospital management portal with specialist doctor profiles, medical department services, and online appointment booking.",
     tags: ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
     link: "https://hospital-management-coral.vercel.app/",
   },
   {
     title: "Rural Bus Tracker",
+    image: "./projects/bus-tracker.jpg",
     text: "Real-time smart passenger information and transit tracking system for rural routes featuring crowd-sourced GPS, confidence scoring, and low-bandwidth SMS mode.",
     tags: ["Python", "Flask", "Leaflet.js", "MySQL"],
     link: "https://rural-bus-tracker-iota.vercel.app/",
   },
 ];
 
-const SKILLS = ["HTML", "CSS", "JavaScript", "React", "Git", "REST APIs", "Responsive design","java","Spring Boot"];
+const SKILLS = ["HTML", "CSS", "JavaScript", "React", "Git", "REST APIs", "Responsive design", "java", "Spring Boot"];
 
 const NAV = ["Home", "About", "Project", "Skill", "Contact"];
 
@@ -79,16 +82,30 @@ const css = `
 .pf .alt{background:var(--soft)}
 .pf .about p{max-width:62ch;font-size:18px;color:var(--slate);margin:0 0 16px}
 .pf .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.pf .card{background:#fff;border:1px solid var(--ink);border-radius:14px;padding:26px;display:flex;flex-direction:column;gap:12px}
+.pf .card{background:#fff;border:1px solid var(--ink);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease}
+.pf .card:hover{transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,.08)}
+.pf .card-thumb{display:block;width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--soft);border-bottom:1px solid var(--line)}
+.pf .card-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.pf .card:hover .card-thumb img{transform:scale(1.04)}
+.pf .card-body{padding:22px;display:flex;flex-direction:column;gap:12px;flex:1}
 .pf .card h3{font-size:21px;font-weight:600;margin:0}
 .pf .card p{margin:0;color:var(--slate);font-size:15px;flex:1}
 .pf .tags{display:flex;gap:8px;flex-wrap:wrap}
 .pf .tag{font-size:13px;padding:2px 10px;border-radius:999px;background:var(--soft);color:var(--slate)}
-.pf .card a{font-weight:500;text-decoration:underline;text-underline-offset:4px}
+.pf .card-link{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--ink);text-decoration:none;margin-top:auto}
+.pf .card-link:hover{text-decoration:underline;text-underline-offset:4px}
 .pf .skills{display:flex;flex-wrap:wrap;gap:12px}
-.pf .skill{font-size:17px;padding:8px 20px;border:1px solid var(--ink);border-radius:999px;background:#fff}
+.pf .skill{font-size:17px;padding:8px 20px;border:1px solid var(--ink);border-radius:999px;background:#fff;cursor:default;user-select:none;transition:transform .22s cubic-bezier(0.2,0.8,0.2,1),background .2s ease,color .2s ease,box-shadow .22s ease}
+.pf .skill:hover{transform:translateY(-3px) scale(1.03);background:var(--ink);color:#fff;box-shadow:0 8px 16px rgba(0,0,0,.12)}
+.pf .skill:active{transform:translateY(0) scale(1)}
 .pf .contact{text-align:center}
 .pf .contact p{color:var(--slate);font-size:18px;margin:0 auto 24px;max-width:46ch}
+.pf .contact-box{max-width:580px;margin:0 auto 24px;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:28px 20px}
+.pf .contact-email{display:inline-flex;align-items:center;gap:10px;font-size:clamp(16px,2.5vw,20px);font-weight:600;margin-bottom:20px;color:var(--ink);word-break:break-all}
+.pf .contact-email svg{flex-shrink:0;color:var(--slate)}
+.pf .contact-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.pf .contact-actions .btn{display:inline-flex;align-items:center;gap:8px;font-size:15px;padding:10px 16px}
+.pf .copied-toast{display:inline-flex;align-items:center;gap:6px;color:#16a34a;font-weight:500;font-size:14px;margin-top:14px}
 .pf footer{text-align:center;padding:28px;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
 @media (max-width:820px){
   .pf .hero{flex-direction:column;gap:36px;padding:48px 0 64px}
@@ -99,6 +116,8 @@ const css = `
   .pf .links{display:none;position:absolute;top:78px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);box-shadow:0 6px 8px rgba(0,0,0,.08)}
   .pf .links.open{display:flex}
   .pf .links a{display:block;padding:14px 24px;border:0}
+  .pf .contact-actions{flex-direction:column}
+  .pf .contact-actions .btn{width:100%;justify-content:center}
 }
 @media (prefers-reduced-motion:reduce){.pf *{transition:none!important}}
 `;
@@ -108,15 +127,70 @@ const LinkedIn = () => (
     <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3V9.75zM9.5 9.75h3.8v1.6h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-4.9c0-1.17-.02-2.67-1.63-2.67-1.63 0-1.88 1.27-1.88 2.59V21h-4V9.75z" />
   </svg>
 );
+
 const GitHub = () => (
   <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.42c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.7 1.24 3.35.95.1-.74.4-1.24.73-1.53-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z" />
   </svg>
 );
 
+const MailIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
+
+const CopyIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+);
+
+const ExternalIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M15 3h6v6" />
+    <path d="M10 14 21 3" />
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+  </svg>
+);
+
+const CURRENT_YEAR = new Date().getFullYear();
+
 export default function Portfolio() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(PROFILE.email);
+      } else {
+        throw new Error("Clipboard API unavailable");
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = PROFILE.email;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
 
   useEffect(() => {
     const els = NAV.map((n) => document.getElementById(n.toLowerCase())).filter(Boolean);
@@ -192,10 +266,19 @@ export default function Portfolio() {
             <div className="grid">
               {PROJECTS.map((p) => (
                 <article className="card" key={p.title}>
-                  <h3>{p.title}</h3>
-                  <p>{p.text}</p>
-                  <div className="tags">{p.tags.map((t) => <span className="tag" key={t}>{t}</span>)}</div>
-                  <a href={p.link} target="_blank" rel="noreferrer">View project</a>
+                  {p.image && (
+                    <a href={p.link} target="_blank" rel="noreferrer" className="card-thumb" aria-label={`View ${p.title} live demo`}>
+                      <img src={p.image} alt={p.title} loading="lazy" />
+                    </a>
+                  )}
+                  <div className="card-body">
+                    <h3>{p.title}</h3>
+                    <p>{p.text}</p>
+                    <div className="tags">{p.tags.map((t) => <span className="tag" key={t}>{t}</span>)}</div>
+                    <a className="card-link" href={p.link} target="_blank" rel="noreferrer">
+                      View project <span>&rarr;</span>
+                    </a>
+                  </div>
                 </article>
               ))}
             </div>
@@ -212,16 +295,46 @@ export default function Portfolio() {
         <section id="contact" className="contact">
           <div className="wrap">
             <h2>Contact</h2>
-            <p>Have a role or a project in mind? Send me an email and I'll reply within two days.</p>
+            <p>Have a role or a project in mind? Reach out directly via email or LinkedIn.</p>
+
+            <div className="contact-box">
+              <div className="contact-email">
+                <MailIcon />
+                <span>{PROFILE.email}</span>
+              </div>
+              <div className="contact-actions">
+                <button type="button" className="btn solid" onClick={handleCopy} aria-label="Copy email address">
+                  {copied ? <CheckIcon /> : <CopyIcon />}
+                  {copied ? "Copied!" : "Copy Email"}
+                </button>
+                <a
+                  className="btn ghost"
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(PROFILE.email)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Open Gmail composer in a new tab"
+                >
+                  Open in Gmail <ExternalIcon />
+                </a>
+                <a
+                  className="btn ghost"
+                  href={"mailto:" + PROFILE.email}
+                  title="Open your default email client"
+                >
+                  Mail App
+                </a>
+              </div>
+              {copied && <div className="copied-toast"><CheckIcon /> Email copied to clipboard!</div>}
+            </div>
+
             <div className="btns">
-              <a className="btn solid" href={"mailto:" + PROFILE.email}>Email me</a>
               <a className="btn ghost" href={PROFILE.linkedin} target="_blank" rel="noreferrer">Message on LinkedIn</a>
             </div>
           </div>
         </section>
       </main>
 
-      <footer>© {new Date().getFullYear()} {PROFILE.name}</footer>
+      <footer>© {CURRENT_YEAR} {PROFILE.name}</footer>
     </div>
   );
 }
